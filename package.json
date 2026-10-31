@@ -1,0 +1,62 @@
+{
+  "name": "call-grokbot",
+  "version": "0.1.0",
+  "description": "Consult your existing Grok Bots from Codex and Claude Code via a local MCP server.",
+  "type": "module",
+  "bin": {
+    "call-grokbot": "dist/cli.js"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "files": [
+    "dist/*.js",
+    "dist/*.d.ts",
+    "dist/*.js.map",
+    "README.md",
+    "README.zh-CN.md",
+    "docs/authentication.md",
+    "docs/verification.md",
+    "LICENSE",
+    "NOTICE.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZensHQ/call-grokbot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ZensHQ/call-grokbot/issues"
+  },
+  "homepage": "https://github.com/ZensHQ/call-grokbot#readme",
+  "license": "MIT",
+  "author": {
+    "name": "Zens AI",
+    "email": "hello@zens.ai",
+    "url": "https://zens.ai"
+  },
+  "keywords": [
+    "mcp",
+    "grokbot",
+    "codex",
+    "claude-code"
+  ],
+  "scripts": {
+    "build": "tsc && node scripts/executable.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "pretest": "npm run build",
+    "check": "biome check src test scripts package.json tsconfig.json",
+    "prepack": "npm run build",
+    "test:live": "node scripts/live-smoke.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.8",
+    "@types/node": "^22.19.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

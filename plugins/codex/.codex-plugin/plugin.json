@@ -1,0 +1,14 @@
+{
+  "name": "call-grokbot",
+  "version": "0.1.0",
+  "description": "Unofficial Grok Bot consultations through a local MCP server.",
+  "author": {
+    "name": "Zens AI",
+    "email": "hello@zens.ai",
+    "url": "https://zens.ai"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/ZensHQ/call-grokbot",
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json"
+}

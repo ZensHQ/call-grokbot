@@ -1,0 +1,16 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "call-grokbot": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "--yes",
+        "call-grokbot@0.1.0"
+      ],
+      "env": {
+        "CALL_GROKBOT_AUTH_MODE": "browser"
+      }
+    }
+  }
+}

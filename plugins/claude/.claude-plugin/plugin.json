@@ -1,0 +1,12 @@
+{
+  "name": "call-grokbot",
+  "version": "0.1.0",
+  "description": "Unofficial MCP bridge to your existing Grok Bots, using official Cursor CLI browser login.",
+  "author": {
+    "name": "Zens AI",
+    "email": "hello@zens.ai",
+    "url": "https://zens.ai"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/ZensHQ/call-grokbot"
+}

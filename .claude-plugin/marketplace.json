@@ -1,0 +1,17 @@
+{
+  "name": "call-grokbot",
+  "metadata": {
+    "description": "Local MCP access to existing Grok Bots with official browser login."
+  },
+  "owner": {
+    "name": "Zens AI",
+    "email": "hello@zens.ai"
+  },
+  "plugins": [
+    {
+      "name": "call-grokbot",
+      "source": "./plugins/claude",
+      "description": "Consult existing Grok Bots through a local MCP server."
+    }
+  ]
+}

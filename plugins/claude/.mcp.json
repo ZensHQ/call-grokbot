@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "call-grokbot": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "call-grokbot@0.1.0"
+      ],
+      "env": {
+        "CALL_GROKBOT_AUTH_MODE": "browser"
+      }
+    }
+  }
+}

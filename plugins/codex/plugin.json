@@ -1,0 +1,26 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "call-grokbot",
+  "version": "0.1.0",
+  "description": "Consult existing Grok Bots with official Cursor CLI browser authentication.",
+  "author": {
+    "name": "Zens AI",
+    "email": "hello@zens.ai",
+    "url": "https://zens.ai"
+  },
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Call Grok Bot",
+        "shortDescription": "Consult your existing Grok Bots",
+        "longDescription": "Send a self-contained task to an existing Grok Bot, read incremental replies, and interrupt work. Runs locally and uses the official Cursor CLI browser login. Unofficial integration.",
+        "developerName": "Zens AI",
+        "category": "Productivity",
+        "defaultPrompt": [
+          "List my available Grok Bots",
+          "Ask my Grok Bot for a second opinion"
+        ]
+      }
+    }
+  }
+}

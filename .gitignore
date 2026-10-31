@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+*.tgz
+.env*
+artifacts/
+.DS_Store
+.npmrc
+.netrc
+*.pem
+*.key
+.secrets/
+auth.json
+credentials.json
+state.json
+state.*.tmp
