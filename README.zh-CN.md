@@ -4,7 +4,9 @@
 
 **非官方项目**，与 Cursor / Anysphere、xAI / Grok、OpenAI、Anthropic 没有隶属、背书或官方支持关系。Grok Bot RPC 尚未公开，可能随服务更新而变化。
 
-[English](README.md) · [认证细节](docs/authentication.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md)
+
+[认证细节（英文）](docs/authentication.md)
 
 ## 开始前准备
 

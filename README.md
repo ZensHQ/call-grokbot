@@ -9,7 +9,9 @@ memory, and connected tools.
 Anysphere, xAI / Grok, OpenAI, or Anthropic.** The Grok Bot RPC is undocumented
 and may change. No public model-inference endpoint is provided.
 
-[简体中文](README.zh-CN.md) · [Authentication details](docs/authentication.md)
+[English](README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md)
+
+[Authentication details](docs/authentication.md)
 
 ## Before you start
 
