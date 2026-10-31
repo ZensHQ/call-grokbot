@@ -6,29 +6,144 @@
 
 [English](README.md) · [认证细节](docs/authentication.md)
 
-## 安装与登录
+## 开始前准备
 
-需要 Node.js **22.13+**、npm、已有 Grok Bot，以及单独安装的 [Cursor 官方 CLI](https://cursor.com/docs/cli/installation)。
+- 安装 Node.js **22.13+**、npm 和 Git。
+- 安装并登录你要使用的 **Codex** 或 **Claude Code**。客户端账号与下面的 Cursor 登录是两套独立认证。
+- 单独安装 [Cursor 官方 CLI](https://cursor.com/docs/cli/installation)。
+- 准备能使用 Grok Bot 的账号，以及至少一个已有 Bot。调用时使用 App 中显示的精确名称，本工具不会新建 Bot。
 
-使用 npm 安装固定版本：
+选择下面的 **Codex 插件流程**或 **Claude Code 插件流程**。两种插件都自带 `consult` skill，并通过固定版本的 `npx` 启动 MCP；不需要全局安装 `call-grokbot`、克隆源码、登录 npm 或申请个人 API key。
 
-```sh
-npm install --global call-grokbot@0.1.1
-call-grokbot login
-call-grokbot doctor
-```
+macOS 读取官方 CLI 的钥匙串，Linux / Windows 读取官方 CLI 的认证文件；不要把 token 复制进 MCP 配置。真实账号插件流程已在 macOS 验证，Linux / Windows 有 CI 覆盖，但真实账号登录尚未实测。
 
-登录命令调用官方 `agent login`。在浏览器选择 Bot 所属账号并完成安全检查，不需要手工申请或复制 API key。macOS 读取官方 CLI 的钥匙串；Linux / Windows 读取官方 CLI 的认证文件。MCP 服务不会在后台突然打开登录页。
+## Codex 插件：安装、登录与调用
 
-源码安装：克隆本仓库后运行 `npm ci`、`npm run build`，然后执行 `node dist/cli.js login`。下面命令中的 `call-grokbot` 可替换为 `node /绝对路径/call-grokbot/dist/cli.js`；JSON/TOML 中将 `command` 改成 `node`，`args` 改成 `["/绝对路径/call-grokbot/dist/cli.js"]`。
-
-## Codex 接入
+### 1. 在终端安装插件
 
 ```sh
-codex mcp add call-grokbot -- call-grokbot
+codex plugin marketplace add ZensHQ/call-grokbot --ref v0.1.1
+codex plugin add call-grokbot@call-grokbot
+codex plugin list
 ```
 
-推荐在 `~/.codex/config.toml` 中显式设置超时和 Bot 白名单：
+确认列表中的 `call-grokbot@call-grokbot` 已安装并启用。这些命令在**终端**运行。如果 Codex 不识别 `plugin`，先更新到支持插件命令的版本；见 [Codex 官方插件文档](https://developers.openai.com/plugins/build/plugins#add-a-marketplace-from-the-cli)。
+
+### 2. 在终端登录 Bot 所属账号
+
+```sh
+npx --yes call-grokbot@0.1.1 login
+npx --yes call-grokbot@0.1.1 doctor
+```
+
+`login` 调用官方 `agent login`。在浏览器中选择 **Bot 所属账号**，完成可能出现的安全检查。随后 `doctor` 应显示 `"authenticated": true`、`"authMode": "browser"` 和 `"cursorCliFound": true`，不会输出凭据。
+
+### 3. 打开新 Codex 会话并调用 skill
+
+在你要工作的项目目录中启动：
+
+```sh
+codex
+```
+
+在 **Codex 对话框**中输入下面的提示词，不要当作终端命令运行：
+
+```text
+$call-grokbot:consult 列出我已有的 Bot，不要发送消息。
+```
+
+从返回结果中选择一个精确名称，再发送测试请求。把下面的 `研究助手` 换成你自己的 Bot 名称：
+
+```text
+$call-grokbot:consult 请让已有 Bot「研究助手」只回复 PONG。
+只发送一次任务；如果仍在 running，继续用 check 等到 finished，不要重新发送。
+```
+
+这会在该 Bot 的真实对话中留下一条消息。验收时同时确认收到 `PONG` 和状态 `finished`，不能把“收到任务”当成完成。日常使用时，把测试请求换成完整任务说明，写明相关事实、限制、允许的操作和期望结果。
+
+## Claude Code 插件：安装、登录与调用
+
+### 1. 在终端安装插件
+
+```sh
+claude plugin marketplace add ZensHQ/call-grokbot
+claude plugin install call-grokbot@call-grokbot --scope user
+claude plugin list
+```
+
+确认 `call-grokbot@call-grokbot` 已启用。`user` 范围表示当前电脑上你的 Claude Code 项目都可以使用。如果已经在 Claude Code 对话中，也可以运行：
+
+```text
+/plugin marketplace add ZensHQ/call-grokbot
+/plugin install call-grokbot@call-grokbot
+```
+
+在交互安装面板中选择 **Install for you（user scope）**。其他安装范围见 [Claude Code 官方插件文档](https://code.claude.com/docs/en/discover-plugins)。
+
+### 2. 在终端登录 Bot 所属账号
+
+```sh
+npx --yes call-grokbot@0.1.1 login
+npx --yes call-grokbot@0.1.1 doctor
+```
+
+在官方浏览器登录流程中选择 Bot 所属账号。检查 `doctor` 返回的 `"authenticated": true`、`"authMode": "browser"` 和 `"cursorCliFound": true`。如果同一台电脑已经为 Codex 插件完成登录，两种插件共用官方 CLI 会话，运行 `npx --yes call-grokbot@0.1.1 doctor` 确认即可，不必重复登录。
+
+### 3. 检查连接，打开新 Claude Code 会话
+
+在终端运行：
+
+```sh
+claude mcp list
+claude
+```
+
+健康检查中应能看到 `plugin:call-grokbot:call-grokbot` 已连接。等 MCP 连接完成再发起第一次请求；如果安装前已有会话，重新打开会话，让它加载插件和 skill。
+
+在 **Claude Code 对话框**中输入：
+
+```text
+/call-grokbot:consult 列出我已有的 Bot，不要发送消息。
+```
+
+把 `研究助手` 换成列表中已有 Bot 的精确名称，再发送：
+
+```text
+/call-grokbot:consult 请让已有 Bot「研究助手」只回复 PONG。
+只发送一次任务；如果仍在 running，继续用 check 等到 finished，不要重新发送。
+```
+
+这同样会发送真实消息。确认收到 `PONG` 且任务状态为 `finished`。实际工作时，应把相关内容写进任务说明；Bot 不会自动看到 Claude Code 对话和本地项目文件。
+
+## 安装与连接排查
+
+| 现象 | 处理方法 |
+| --- | --- |
+| `call-grokbot: command not found` | 插件不会安装全局命令。在终端使用 `npx --yes call-grokbot@0.1.1 login` 或 `npx --yes call-grokbot@0.1.1 doctor`。 |
+| `CLI_MISSING` | 安装上面链接中的 Cursor 官方 CLI。若安装在非标准位置，用 `CALL_GROKBOT_CURSOR_CLI` 指定可执行文件的绝对路径。 |
+| `AUTH_REQUIRED` / `AUTH_EXPIRED` | 重新运行固定版本的 `npx` 登录命令，完成浏览器登录后运行 `npx --yes call-grokbot@0.1.1 doctor`。MCP 启动不会自动打开登录页。 |
+| 看不到 skill 或 MCP 工具 | 用 `codex plugin list` 或 `claude plugin list` 确认插件已安装并启用，再打开新会话。只有 MCP 配置时不会带有 skill。 |
+| Claude Code 提示工具不可用或仍在连接 | 等待 MCP 启动，用 `claude mcp list` 检查；确认已连接后，若原会话仍看不到工具，再开新会话。对可能已经发送的任务不要重发。 |
+| 找不到 Bot 或返回 403 | 核对 Bot 精确名称及浏览器登录账号。登录有效不等于拥有未公开 RPC 的访问权限；参见下方“并发与恢复”。 |
+
+## 可选：只配置 MCP
+
+仅需要四个工具时，可以用下面的方式**代替插件安装**；同一客户端不要同时安装两套，以免出现重复工具。直接 MCP 配置不包含 `consult` skill，使用普通提示词要求客户端调用 call-grokbot 工具即可。
+
+先在终端完成相同的登录检查：
+
+```sh
+npx --yes call-grokbot@0.1.1 login
+npx --yes call-grokbot@0.1.1 doctor
+```
+
+Codex 在终端注册：
+
+```sh
+codex mcp add call-grokbot -- npx --yes call-grokbot@0.1.1
+```
+
+若需要 Bot 白名单和更长超时，在 `~/.codex/config.toml` 中配置同一个条目：
 
 ```toml
 [mcp_servers.call-grokbot]
@@ -36,39 +151,50 @@ command = "npx"
 args = ["--yes", "call-grokbot@0.1.1"]
 startup_timeout_sec = 30
 tool_timeout_sec = 660
-env = { CALL_GROKBOT_AGENTS = "你的 Bot 精确名称" }
+env = { CALL_GROKBOT_AGENTS = "研究助手" }
 ```
 
-也可安装带咨询 skill 的插件，避免与直接 MCP 配置重复安装：
+Claude Code 在终端注册：
 
 ```sh
-codex plugin marketplace add ZensHQ/call-grokbot --ref v0.1.1
-codex plugin add call-grokbot@call-grokbot
+claude mcp add --transport stdio --scope user call-grokbot -- npx --yes call-grokbot@0.1.1
 ```
 
-## Claude Code 接入
+也可以在可信项目中使用下面的 `.mcp.json`，代替 user 范围的配置：
+
+```json
+{
+  "mcpServers": {
+    "call-grokbot": {
+      "command": "npx",
+      "args": ["--yes", "call-grokbot@0.1.1"],
+      "env": {
+        "CALL_GROKBOT_AUTH_MODE": "browser",
+        "CALL_GROKBOT_AGENTS": "研究助手"
+      }
+    }
+  }
+}
+```
+
+把 `研究助手` 换成已有 Bot 的精确名称。修改 MCP 配置后打开新会话。
+
+## 可选：全局安装或源码运行
+
+若希望直接使用 `call-grokbot` 命令，可以先运行 `npm install --global call-grokbot@0.1.1`，然后用 `call-grokbot login`、`doctor` 等子命令代替固定版本的 `npx` 写法。
+
+源码运行：
 
 ```sh
-claude mcp add --transport stdio --scope user call-grokbot -- call-grokbot
+git clone https://github.com/ZensHQ/call-grokbot.git
+cd call-grokbot
+npm ci
+npm run build
+node dist/cli.js login
+node dist/cli.js doctor
 ```
 
-或者使用仓库中的 Claude Code 插件：
-
-```text
-/plugin marketplace add ZensHQ/call-grokbot
-/plugin install call-grokbot@call-grokbot
-```
-
-只安装插件时不需要全局安装 npm 包。在终端完成一次官方登录：
-
-```sh
-npx --yes call-grokbot@0.1.1 login
-npx --yes call-grokbot@0.1.1 doctor
-```
-
-打开新会话；Codex 使用 `$call-grokbot:consult` 并指定已有 Bot，Claude Code 使用 `/call-grokbot:consult`。
-
-修改 MCP 配置后打开新会话。项目 `.mcp.json`、完整环境变量和源码接入示例见英文文档。
+在其他目录使用 `node /绝对路径/call-grokbot/dist/cli.js` 执行命令。MCP 配置中将 `command` 改成 `node`，`args` 改成 `["/绝对路径/call-grokbot/dist/cli.js"]`。
 
 ## 四个工具
 
@@ -86,12 +212,12 @@ Bot 看不到 IDE 会话、文件或前面的工具结果。消息中应包含�
 ## 到期、续期与退出
 
 ```sh
-call-grokbot auth status
-call-grokbot auth refresh
-call-grokbot logout
+npx --yes call-grokbot@0.1.1 auth status
+npx --yes call-grokbot@0.1.1 auth refresh
+npx --yes call-grokbot@0.1.1 logout
 ```
 
-源码运行时，使用 `node /绝对路径/call-grokbot/dist/cli.js` 执行这些子命令。
+默认认证为 `browser`，即使环境中存在 `CURSOR_API_KEY` 也不会自动切换。浏览器位于另一台电脑时，可以设置 `NO_OPEN_BROWSER=1` 运行登录，让官方 CLI 输出登录链接。源码运行时，使用 `node /绝对路径/call-grokbot/dist/cli.js` 执行这些子命令。
 
 当前官方浏览器会话有固定有效期，本次实测约 60 天。CLI 保存的 `refreshToken` 不是已验证的静默刷新能力。程序每次请求都会重读最新凭据，重新登录后无需重启 MCP；ask/check 在到期前五分钟提示续期，过期或被撤销时停止调用并提示登录。`auth refresh` 会重新走官方浏览器授权，不能宣称无限自动续期。
 
@@ -104,7 +230,7 @@ call-grokbot logout
 - 同一 Bot 在本机多个 IDE 之间使用文件锁，避免同时发送；本地状态原子写入。
 - 发送前先记录 message ID。网络中断或结果不确定时保留待确认记录，不自动重试写操作。
 - 取消或读取失败不会推进未交付回复的游标；用 `check` 恢复。
-- 状态损坏、游标重置或权限错误时明确报错，不静默清空待确认任务、不绕过权限。
+- 状态损坏、游标重置或权限错误时明确报错，不静默清空待确认任务、不绕过权限。登录有效但返回 403 时停止调用，不自动扩权或新建 Bot 绕过。
 - Bot 白名单只约束本工具，不会把账号登录权限缩小到单个 Bot。
 
 默认状态目录为 `~/.local/state/call-grokbot`（或 `$XDG_STATE_HOME/call-grokbot`），Windows 为 `%LOCALAPPDATA%/call-grokbot`。只保存联系人、游标、时间和待确认回执，不保存会话正文或令牌。POSIX 文件 0600、目录 0700；Windows 使用用户目录 ACL。
