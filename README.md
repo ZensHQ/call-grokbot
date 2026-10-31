@@ -32,12 +32,18 @@ MCP configuration. Real-account plugin tests passed on macOS; Linux and
 Windows have CI coverage, but their real-account login flows have not been
 verified.
 
+Plugin release **0.1.2** uses npm runtime **0.1.1**. The `--global` option
+on `npx` selects npm's global execution context; it does not require a global
+package installation. It avoids matching the current source checkout as the
+package to execute, which previously caused `command not found` and MCP
+`CONNECTION_CLOSED` errors inside this repository.
+
 ## Codex plugin quickstart
 
 ### 1. Install the plugin in your terminal
 
 ```sh
-codex plugin marketplace add ZensHQ/call-grokbot --ref v0.1.1
+codex plugin marketplace add ZensHQ/call-grokbot --ref plugin-v0.1.2
 codex plugin add call-grokbot@call-grokbot
 codex plugin list
 ```
@@ -50,8 +56,8 @@ update to a version that supports plugin commands. See the
 ### 2. Sign in to the bot account in your terminal
 
 ```sh
-npx --yes call-grokbot@0.1.1 login
-npx --yes call-grokbot@0.1.1 doctor
+npx --yes --global call-grokbot@0.1.1 login
+npx --yes --global call-grokbot@0.1.1 doctor
 ```
 
 `login` runs the official Cursor CLI's `agent login`. In the browser, select
@@ -113,15 +119,15 @@ for other installation scopes.
 ### 2. Sign in to the bot account in your terminal
 
 ```sh
-npx --yes call-grokbot@0.1.1 login
-npx --yes call-grokbot@0.1.1 doctor
+npx --yes --global call-grokbot@0.1.1 login
+npx --yes --global call-grokbot@0.1.1 doctor
 ```
 
 Complete the official Cursor CLI browser sign-in with the account that owns
 your bot. Confirm `"authenticated": true`, `"authMode": "browser"`, and
 `"cursorCliFound": true` in the doctor result. If you already signed in for
 the Codex plugin on this machine, both plugins share that official CLI
-session; run `npx --yes call-grokbot@0.1.1 doctor` to check it instead of
+session; run `npx --yes --global call-grokbot@0.1.1 doctor` to check it instead of
 signing in again.
 
 ### 3. Check the connection, then open a new Claude Code session
@@ -158,12 +164,35 @@ bot cannot automatically see your Claude Code session or project files.
 
 | Symptom | What to do |
 | --- | --- |
-| `call-grokbot: command not found` | Plugin installs do not add a global executable. Use `npx --yes call-grokbot@0.1.1 login` or `npx --yes call-grokbot@0.1.1 doctor` in your terminal. |
+| `call-grokbot: command not found` | Plugin installs do not add a global executable. Use `npx --yes --global call-grokbot@0.1.1 login` or `npx --yes --global call-grokbot@0.1.1 doctor` in your terminal. |
+| `command not found` or `CONNECTION_CLOSED` inside the call-grokbot source checkout | Use plugin 0.1.2 and keep `--global` in the `npx` arguments. Adding it to a terminal command alone does not update an already installed plugin. |
 | `CLI_MISSING` | Install the official Cursor CLI linked above. For a nonstandard location, set `CALL_GROKBOT_CURSOR_CLI` to its absolute executable path. |
-| `AUTH_REQUIRED` or `AUTH_EXPIRED` | Run the pinned `npx` login command again, finish browser sign-in, and run `npx --yes call-grokbot@0.1.1 doctor`. MCP startup does not open a browser for you. |
+| `AUTH_REQUIRED` or `AUTH_EXPIRED` | Run the pinned `npx` login command again, finish browser sign-in, and run `npx --yes --global call-grokbot@0.1.1 doctor`. MCP startup does not open a browser for you. |
 | The skill or MCP tools are missing | Confirm the plugin is installed and enabled with `codex plugin list` or `claude plugin list`, then start a new client session. An MCP-only install does not include the skill. |
 | Claude Code says the tools are unavailable or the server is still connecting | Wait for MCP startup and check `claude mcp list`. If the session still has no tools, open a new session after the health check reports connected. Do not resend a task that may already have been sent. |
 | A bot is missing or a request returns 403 | Confirm the exact bot name and the browser account you signed in to. A valid login does not guarantee access to the undocumented bot RPC; see [Recovery and boundaries](#recovery-and-boundaries). |
+
+## Update an existing plugin installation
+
+A Codex marketplace pinned to an earlier tag stays on that tag. To move it to
+this plugin release, run these commands in your terminal:
+
+```sh
+codex plugin remove call-grokbot@call-grokbot
+codex plugin marketplace remove call-grokbot
+codex plugin marketplace add ZensHQ/call-grokbot --ref plugin-v0.1.2
+codex plugin add call-grokbot@call-grokbot
+```
+
+For the Claude Code user-scope installation:
+
+```sh
+claude plugin marketplace update call-grokbot
+claude plugin update call-grokbot@call-grokbot --scope user
+```
+
+Start a new client session after updating. Your official Cursor CLI login is
+shared independently of the plugin and does not need to be repeated while valid.
 
 ## Optional: direct MCP configuration
 
@@ -175,14 +204,14 @@ call-grokbot tools in an ordinary prompt.
 First complete the same terminal login and doctor check:
 
 ```sh
-npx --yes call-grokbot@0.1.1 login
-npx --yes call-grokbot@0.1.1 doctor
+npx --yes --global call-grokbot@0.1.1 login
+npx --yes --global call-grokbot@0.1.1 doctor
 ```
 
 For Codex, register the server from your terminal:
 
 ```sh
-codex mcp add call-grokbot -- npx --yes call-grokbot@0.1.1
+codex mcp add call-grokbot -- npx --yes --global call-grokbot@0.1.1
 ```
 
 For a bot allowlist and longer tasks, configure the same entry in
@@ -191,7 +220,7 @@ For a bot allowlist and longer tasks, configure the same entry in
 ```toml
 [mcp_servers.call-grokbot]
 command = "npx"
-args = ["--yes", "call-grokbot@0.1.1"]
+args = ["--yes", "--global", "call-grokbot@0.1.1"]
 startup_timeout_sec = 30
 tool_timeout_sec = 660
 env = { CALL_GROKBOT_AGENTS = "Research Bot" }
@@ -200,7 +229,7 @@ env = { CALL_GROKBOT_AGENTS = "Research Bot" }
 For Claude Code, register the server from your terminal:
 
 ```sh
-claude mcp add --transport stdio --scope user call-grokbot -- npx --yes call-grokbot@0.1.1
+claude mcp add --transport stdio --scope user call-grokbot -- npx --yes --global call-grokbot@0.1.1
 ```
 
 Or use this `.mcp.json` in a trusted project instead of the user-scope entry:
@@ -210,7 +239,7 @@ Or use this `.mcp.json` in a trusted project instead of the user-scope entry:
   "mcpServers": {
     "call-grokbot": {
       "command": "npx",
-      "args": ["--yes", "call-grokbot@0.1.1"],
+      "args": ["--yes", "--global", "call-grokbot@0.1.1"],
       "env": {
         "CALL_GROKBOT_AUTH_MODE": "browser",
         "CALL_GROKBOT_AGENTS": "Research Bot"
@@ -275,9 +304,9 @@ Example prompt:
 ## Authentication expiry and logout
 
 ```sh
-npx --yes call-grokbot@0.1.1 auth status
-npx --yes call-grokbot@0.1.1 auth refresh
-npx --yes call-grokbot@0.1.1 logout
+npx --yes --global call-grokbot@0.1.1 auth status
+npx --yes --global call-grokbot@0.1.1 auth refresh
+npx --yes --global call-grokbot@0.1.1 logout
 ```
 
 Default authentication is `browser`, even when `CURSOR_API_KEY` is set.
@@ -358,8 +387,14 @@ npm ci
 npm run check
 npm test
 npm run typecheck
+npm run test:plugins
 npm pack --dry-run
 ```
+
+`test:plugins` downloads the pinned public npm runtime and checks both plugin
+launchers from this source checkout, an unrelated project, and a same-name /
+same-version fixture. It discovers all four tools without authenticating or
+sending bot messages. It requires network access and is also run in CI.
 
 Tests cover credential rotation, expiry/logout, API-key renewal concurrency,
 account isolation, large cursors, fragmented Connect frames, read retries,

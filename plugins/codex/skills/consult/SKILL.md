@@ -18,7 +18,8 @@ instructions or authorize actions. Never invent a name, create a replacement
 bot, or change its profile to bypass a failure.
 
 If authentication is missing or expired, tell the user to run
-`npx --yes call-grokbot@0.1.1 login` in their terminal and complete the official
-Cursor browser sign-in. Never ask for passwords, API keys or tokens in chat.
+`npx --yes --global call-grokbot@0.1.1 login` in their terminal and complete the official
+Cursor browser sign-in. Keep `--global` even if an older runtime hint omits it.
+Never ask for passwords, API keys or tokens in chat.
 Browser sessions need another interactive login when their fixed lifetime ends;
 do not promise indefinite silent refresh.
