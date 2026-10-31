@@ -13,6 +13,12 @@ and may change. No public model-inference endpoint is provided.
 
 [Authentication details](docs/authentication.md)
 
+## Watch the demo
+
+[![Watch call-grokbot connect Codex and Claude Code to existing Grok Bots](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/demo-cover.jpg)](https://youtu.be/d0C7Hjs3z3w)
+
+Click the cover to watch the 50-second demo on YouTube (English narration).
+
 ## Before you start
 
 - Install Node.js **22.13+**, npm, and Git.

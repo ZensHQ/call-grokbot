@@ -8,6 +8,12 @@
 
 [认证细节（英文）](docs/authentication.md)
 
+## 视频演示
+
+[![观看 call-grokbot 演示：让 Codex 和 Claude Code 调用已有的 Grok Bot](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/demo-cover.jpg)](https://youtu.be/d0C7Hjs3z3w)
+
+点击封面，在 YouTube 观看 50 秒演示（英语解说）。
+
 ## 开始前准备
 
 - 安装 Node.js **22.13+**、npm 和 Git。

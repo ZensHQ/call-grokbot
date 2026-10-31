@@ -8,6 +8,12 @@ Consulte seus **Grok Bots** existentes pelo **Codex** e pelo **Claude Code**. Um
 
 [Detalhes de autenticação (em inglês)](docs/authentication.md)
 
+## Vídeo de demonstração
+
+[![Veja como o call-grokbot conecta o Codex e o Claude Code aos seus Grok Bots](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/demo-cover.jpg)](https://youtu.be/d0C7Hjs3z3w)
+
+Clique na imagem para assistir à demonstração de 50 segundos no YouTube (narração em inglês).
+
 ## Antes de começar
 
 - Instale Node.js **22.13 ou superior**, npm e Git.

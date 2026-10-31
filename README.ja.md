@@ -8,6 +8,12 @@
 
 [認証の詳細（英語）](docs/authentication.md)
 
+## デモ動画
+
+[![call-grokbot で Codex と Claude Code から既存の Grok Bot を呼び出すデモを見る](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/demo-cover.jpg)](https://youtu.be/d0C7Hjs3z3w)
+
+画像をクリックすると、YouTube で 50 秒のデモ動画を視聴できます（英語ナレーション）。
+
 ## 利用前の準備
 
 - Node.js **22.13 以降**、npm、Git をインストールしてください。
