@@ -1,6 +1,6 @@
 {
   "name": "call-grokbot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Consult your existing Grok Bots from Codex and Claude Code via a local MCP server.",
   "type": "module",
   "bin": {

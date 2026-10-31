@@ -4,8 +4,9 @@ import { cursorCommand, findCursorCli, RELOGIN } from './auth.js';
 import { readConfig } from './config.js';
 import { AppError, Redactor } from './errors.js';
 import { createApp, createServer } from './server.js';
+import { VERSION } from './version.js';
 
-const help = `call-grokbot 0.1.0 — unofficial local MCP bridge
+const help = `call-grokbot ${VERSION} — unofficial local MCP bridge
 
 call-grokbot                 Start MCP over stdio (no browser or login prompts)
 call-grokbot login           Official Cursor CLI browser sign-in
@@ -23,7 +24,7 @@ Optional CALL_GROKBOT_AUTH_MODE=api-key enables automatic short-token exchanges.
 async function main() {
   const args = process.argv.slice(2);
   if (args[0] === '--version') {
-    process.stdout.write('0.1.0\n');
+    process.stdout.write(`${VERSION}\n`);
     return;
   }
   if (args[0] === '--help' || args[0] === '-h') {

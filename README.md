@@ -27,7 +27,7 @@ Grok Bot account was exercised on macOS only.
 Install the version-pinned npm package:
 
 ```sh
-npm install --global call-grokbot@0.1.0
+npm install --global call-grokbot@0.1.1
 call-grokbot login
 call-grokbot doctor
 ```
@@ -66,7 +66,7 @@ For a bot allowlist and longer tasks, use this in `~/.codex/config.toml`:
 ```toml
 [mcp_servers.call-grokbot]
 command = "npx"
-args = ["--yes", "call-grokbot@0.1.0"]
+args = ["--yes", "call-grokbot@0.1.1"]
 startup_timeout_sec = 30
 tool_timeout_sec = 660
 env = { CALL_GROKBOT_AGENTS = "Research Bot" }
@@ -77,10 +77,20 @@ Restart the client or open a new session after changing MCP configuration.
 For the bundled consultation skill and plugin:
 
 ```sh
-codex plugin marketplace add ZensHQ/call-grokbot --ref v0.1.0
+codex plugin marketplace add ZensHQ/call-grokbot --ref v0.1.1
 codex plugin add call-grokbot@call-grokbot
 ```
 
+Plugin-only users do not need a global npm install. After installing either
+plugin, sign in from a terminal:
+
+```sh
+npx --yes call-grokbot@0.1.1 login
+npx --yes call-grokbot@0.1.1 doctor
+```
+
+Open a new client session. In Codex, invoke `$call-grokbot:consult` and name
+your existing bot; in Claude Code, invoke `/call-grokbot:consult`.
 Install either the direct server or the plugin to avoid duplicate tools.
 
 ## Connect Claude Code
@@ -96,7 +106,7 @@ Or add this `.mcp.json` to a trusted project:
   "mcpServers": {
     "call-grokbot": {
       "command": "npx",
-      "args": ["--yes", "call-grokbot@0.1.0"],
+      "args": ["--yes", "call-grokbot@0.1.1"],
       "env": {
         "CALL_GROKBOT_AUTH_MODE": "browser",
         "CALL_GROKBOT_AGENTS": "Research Bot"

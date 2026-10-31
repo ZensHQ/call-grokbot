@@ -13,7 +13,7 @@
 使用 npm 安装固定版本：
 
 ```sh
-npm install --global call-grokbot@0.1.0
+npm install --global call-grokbot@0.1.1
 call-grokbot login
 call-grokbot doctor
 ```
@@ -33,7 +33,7 @@ codex mcp add call-grokbot -- call-grokbot
 ```toml
 [mcp_servers.call-grokbot]
 command = "npx"
-args = ["--yes", "call-grokbot@0.1.0"]
+args = ["--yes", "call-grokbot@0.1.1"]
 startup_timeout_sec = 30
 tool_timeout_sec = 660
 env = { CALL_GROKBOT_AGENTS = "你的 Bot 精确名称" }
@@ -42,7 +42,7 @@ env = { CALL_GROKBOT_AGENTS = "你的 Bot 精确名称" }
 也可安装带咨询 skill 的插件，避免与直接 MCP 配置重复安装：
 
 ```sh
-codex plugin marketplace add ZensHQ/call-grokbot --ref v0.1.0
+codex plugin marketplace add ZensHQ/call-grokbot --ref v0.1.1
 codex plugin add call-grokbot@call-grokbot
 ```
 
@@ -58,6 +58,15 @@ claude mcp add --transport stdio --scope user call-grokbot -- call-grokbot
 /plugin marketplace add ZensHQ/call-grokbot
 /plugin install call-grokbot@call-grokbot
 ```
+
+只安装插件时不需要全局安装 npm 包。在终端完成一次官方登录：
+
+```sh
+npx --yes call-grokbot@0.1.1 login
+npx --yes call-grokbot@0.1.1 doctor
+```
+
+打开新会话；Codex 使用 `$call-grokbot:consult` 并指定已有 Bot，Claude Code 使用 `/call-grokbot:consult`。
 
 修改 MCP 配置后打开新会话。项目 `.mcp.json`、完整环境变量和源码接入示例见英文文档。
 

@@ -6,10 +6,10 @@ import { promisify } from 'node:util';
 import { z } from 'zod';
 import type { Config } from './config.js';
 import { AppError, type Redactor } from './errors.js';
+import { LOGIN_COMMAND } from './version.js';
 
 const exec = promisify(execFile);
-export const RELOGIN =
-  'Run `call-grokbot login` to sign in with the official Cursor CLI.';
+export const RELOGIN = `Run \`${LOGIN_COMMAND}\` to sign in with the official Cursor CLI.`;
 export interface Identity {
   token: string;
   subject: string;
@@ -86,7 +86,7 @@ export async function findCursorCli(
   }
   throw new AppError(
     'CLI_MISSING',
-    'Install the official Cursor CLI from https://cursor.com/docs/cli/installation, then run `call-grokbot login`.',
+    `Install the official Cursor CLI from https://cursor.com/docs/cli/installation. ${RELOGIN}`,
   );
 }
 export async function cursorCommand(

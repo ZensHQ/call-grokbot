@@ -1,6 +1,6 @@
 {
   "name": "call-grokbot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Unofficial Grok Bot consultations through a local MCP server.",
   "author": {
     "name": "Zens AI",

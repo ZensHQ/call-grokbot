@@ -7,6 +7,7 @@ import {
 } from '../src/auth.js';
 import { readConfig, resolveName } from '../src/config.js';
 import { Redactor } from '../src/errors.js';
+import { LOGIN_COMMAND } from '../src/version.js';
 
 function jwt(subject = 'test-owner', expires = Date.now() + 3600000) {
   return `eyJ0eXAiOiJKV1QifQ.${Buffer.from(JSON.stringify({ sub: subject, exp: Math.floor(expires / 1000) })).toString('base64url')}.synthetic-signature`;
@@ -38,6 +39,7 @@ describe('official browser session', () => {
     );
     await expect(auth.identity()).rejects.toMatchObject({
       code: 'AUTH_EXPIRED',
+      message: expect.stringContaining(LOGIN_COMMAND),
     });
   });
   it('rejects malformed or subject-less tokens', () => {

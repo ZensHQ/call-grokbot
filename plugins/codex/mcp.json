@@ -6,7 +6,7 @@
       "command": "npx",
       "args": [
         "--yes",
-        "call-grokbot@0.1.0"
+        "call-grokbot@0.1.1"
       ],
       "env": {
         "CALL_GROKBOT_AUTH_MODE": "browser"
