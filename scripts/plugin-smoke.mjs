@@ -19,15 +19,19 @@ const claude = (await readJson('../plugins/claude/.mcp.json')).mcpServers[
   'call-grokbot'
 ];
 assert.deepEqual(codex.args, legacy.args);
-const runtime = codex.args.find((arg) => /^call-grokbot@\d/.test(arg));
-assert.ok(runtime, 'Plugin must pin a published npm runtime');
-const version = runtime.slice('call-grokbot@'.length);
+const runtime = codex.args.find((arg) => arg.startsWith('https://'));
+assert.ok(runtime, 'Plugin must pin the official npm tarball URL');
+assert.equal(new URL(runtime).origin, 'https://registry.npmjs.org');
+const version = /call-grokbot-(\d+\.\d+\.\d+)\.tgz$/.exec(runtime)?.[1];
+assert.ok(version, 'Runtime URL must pin an exact version');
 const temporary = await mkdtemp(join(tmpdir(), 'call-grokbot-plugin-smoke-'));
 const env = Object.fromEntries(
   Object.entries(process.env).filter(
     ([key, value]) =>
       typeof value === 'string' &&
       !key.startsWith('CALL_GROKBOT_') &&
+      !/^npm_config_/i.test(key) &&
+      !['NPM_TOKEN', 'NODE_AUTH_TOKEN'].includes(key) &&
       ![
         'CURSOR_API_KEY',
         'CURSOR_API_KEY_FILE',
@@ -37,7 +41,13 @@ const env = Object.fromEntries(
   ),
 );
 
+env.NPM_CONFIG_CACHE = join(temporary, 'npm-cache');
+env.NPM_CONFIG_USERCONFIG = join(temporary, 'user.npmrc');
+env.NPM_CONFIG_GLOBALCONFIG = join(temporary, 'global.npmrc');
+
 try {
+  await writeFile(env.NPM_CONFIG_USERCONFIG, '');
+  await writeFile(env.NPM_CONFIG_GLOBALCONFIG, '');
   for (const [label, cwd, manifest] of [
     ['source-checkout', root, null],
     ['unrelated-project', temporary, { name: 'unrelated', version: '1.0.0' }],
@@ -68,13 +78,27 @@ try {
         env: { ...env, ...config.env },
         stderr: 'pipe',
       });
-      transport.stderr?.on('data', () => {});
+      let startupStderr = '';
+      transport.stderr?.on('data', (chunk) => {
+        startupStderr = (startupStderr + chunk.toString()).slice(-8192);
+      });
       try {
         await client.connect(transport, { timeout: 90000 });
         assert.equal(client.getServerVersion()?.version, version);
         const tools = (await client.listTools()).tools.map((tool) => tool.name);
         assert.deepEqual(tools.sort(), ['ask', 'check', 'interrupt', 'list']);
         console.log(JSON.stringify({ host, cwd: label, passed: true }));
+      } catch (error) {
+        console.error(
+          JSON.stringify({
+            host,
+            cwd: label,
+            npmErrorCodes: [
+              ...startupStderr.matchAll(/npm (?:error|ERR!) code (\w+)/g),
+            ].map((match) => match[1]),
+          }),
+        );
+        throw error;
       } finally {
         await client.close();
         await transport.close();

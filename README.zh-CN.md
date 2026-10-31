@@ -17,7 +17,7 @@
 
 macOS 读取官方 CLI 的钥匙串，Linux / Windows 读取官方 CLI 的认证文件；不要把 token 复制进 MCP 配置。真实账号插件流程已在 macOS 验证，Linux / Windows 有 CI 覆盖，但真实账号登录尚未实测。
 
-当前**插件版本为 0.1.2**，使用的 **npm 程序版本仍为 0.1.1**。`npx` 的 `--global` 参数选择全局执行上下文，不要求全局安装 npm 包。它避免将当前源码仓库误匹配为待运行的本地包，修复在本仓库目录中出现的 `command not found` 和 MCP `CONNECTION_CLOSED`。
+当前**插件版本为 0.1.2**，使用的 **npm 程序版本仍为 0.1.1**。启动命令固定使用 npm 官方 tarball 地址，避免 npm 误用当前同名源码仓库，修复 `command not found` 和 MCP `CONNECTION_CLOSED`，同时兼容空缓存首次启动；不需要全局安装 npm 包。
 
 ## Codex 插件：安装、登录与调用
 
@@ -34,8 +34,8 @@ codex plugin list
 ### 2. 在终端登录 Bot 所属账号
 
 ```sh
-npx --yes --global call-grokbot@0.1.1 login
-npx --yes --global call-grokbot@0.1.1 doctor
+npx --yes https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz login
+npx --yes https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz doctor
 ```
 
 `login` 调用官方 `agent login`。在浏览器中选择 **Bot 所属账号**，完成可能出现的安全检查。随后 `doctor` 应显示 `"authenticated": true`、`"authMode": "browser"` 和 `"cursorCliFound": true`，不会输出凭据。
@@ -85,11 +85,11 @@ claude plugin list
 ### 2. 在终端登录 Bot 所属账号
 
 ```sh
-npx --yes --global call-grokbot@0.1.1 login
-npx --yes --global call-grokbot@0.1.1 doctor
+npx --yes https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz login
+npx --yes https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz doctor
 ```
 
-在官方浏览器登录流程中选择 Bot 所属账号。检查 `doctor` 返回的 `"authenticated": true`、`"authMode": "browser"` 和 `"cursorCliFound": true`。如果同一台电脑已经为 Codex 插件完成登录，两种插件共用官方 CLI 会话，运行 `npx --yes --global call-grokbot@0.1.1 doctor` 确认即可，不必重复登录。
+在官方浏览器登录流程中选择 Bot 所属账号。检查 `doctor` 返回的 `"authenticated": true`、`"authMode": "browser"` 和 `"cursorCliFound": true`。如果同一台电脑已经为 Codex 插件完成登录，两种插件共用官方 CLI 会话，运行 `npx --yes https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz doctor` 确认即可，不必重复登录。
 
 ### 3. 检查连接，打开新 Claude Code 会话
 
@@ -121,10 +121,10 @@ claude
 
 | 现象 | 处理方法 |
 | --- | --- |
-| `call-grokbot: command not found` | 插件不会安装全局命令。在终端使用 `npx --yes --global call-grokbot@0.1.1 login` 或 `npx --yes --global call-grokbot@0.1.1 doctor`。 |
-| 在 call-grokbot 源码目录报 `command not found` 或 `CONNECTION_CLOSED` | 更新到插件 0.1.2，并保留 `npx` 参数中的 `--global`。只修改终端命令不会自动更新已安装插件的启动配置。 |
+| `call-grokbot: command not found` | 插件不会安装全局命令。在终端使用 `npx --yes https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz login` 或 `npx --yes https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz doctor`。 |
+| 在 call-grokbot 源码目录报 `command not found` 或 `CONNECTION_CLOSED` | 更新到插件 0.1.2，使用固定的 npm tarball 地址。只修改终端命令不会自动更新已安装插件的启动配置；旧的 `--global` 临时方案在空缓存下仍可能失败。 |
 | `CLI_MISSING` | 安装上面链接中的 Cursor 官方 CLI。若安装在非标准位置，用 `CALL_GROKBOT_CURSOR_CLI` 指定可执行文件的绝对路径。 |
-| `AUTH_REQUIRED` / `AUTH_EXPIRED` | 重新运行固定版本的 `npx` 登录命令，完成浏览器登录后运行 `npx --yes --global call-grokbot@0.1.1 doctor`。MCP 启动不会自动打开登录页。 |
+| `AUTH_REQUIRED` / `AUTH_EXPIRED` | 重新运行固定版本的 `npx` 登录命令，完成浏览器登录后运行 `npx --yes https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz doctor`。MCP 启动不会自动打开登录页。 |
 | 看不到 skill 或 MCP 工具 | 用 `codex plugin list` 或 `claude plugin list` 确认插件已安装并启用，再打开新会话。只有 MCP 配置时不会带有 skill。 |
 | Claude Code 提示工具不可用或仍在连接 | 等待 MCP 启动，用 `claude mcp list` 检查；确认已连接后，若原会话仍看不到工具，再开新会话。对可能已经发送的任务不要重发。 |
 | 找不到 Bot 或返回 403 | 核对 Bot 精确名称及浏览器登录账号。登录有效不等于拥有未公开 RPC 的访问权限；参见下方“并发与恢复”。 |
@@ -156,14 +156,14 @@ claude plugin update call-grokbot@call-grokbot --scope user
 先在终端完成相同的登录检查：
 
 ```sh
-npx --yes --global call-grokbot@0.1.1 login
-npx --yes --global call-grokbot@0.1.1 doctor
+npx --yes https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz login
+npx --yes https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz doctor
 ```
 
 Codex 在终端注册：
 
 ```sh
-codex mcp add call-grokbot -- npx --yes --global call-grokbot@0.1.1
+codex mcp add call-grokbot -- npx --yes https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz
 ```
 
 若需要 Bot 白名单和更长超时，在 `~/.codex/config.toml` 中配置同一个条目：
@@ -171,7 +171,7 @@ codex mcp add call-grokbot -- npx --yes --global call-grokbot@0.1.1
 ```toml
 [mcp_servers.call-grokbot]
 command = "npx"
-args = ["--yes", "--global", "call-grokbot@0.1.1"]
+args = ["--yes", "https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz"]
 startup_timeout_sec = 30
 tool_timeout_sec = 660
 env = { CALL_GROKBOT_AGENTS = "研究助手" }
@@ -180,7 +180,7 @@ env = { CALL_GROKBOT_AGENTS = "研究助手" }
 Claude Code 在终端注册：
 
 ```sh
-claude mcp add --transport stdio --scope user call-grokbot -- npx --yes --global call-grokbot@0.1.1
+claude mcp add --transport stdio --scope user call-grokbot -- npx --yes https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz
 ```
 
 也可以在可信项目中使用下面的 `.mcp.json`，代替 user 范围的配置：
@@ -190,7 +190,7 @@ claude mcp add --transport stdio --scope user call-grokbot -- npx --yes --global
   "mcpServers": {
     "call-grokbot": {
       "command": "npx",
-      "args": ["--yes", "--global", "call-grokbot@0.1.1"],
+      "args": ["--yes", "https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz"],
       "env": {
         "CALL_GROKBOT_AUTH_MODE": "browser",
         "CALL_GROKBOT_AGENTS": "研究助手"
@@ -235,9 +235,9 @@ Bot 看不到 IDE 会话、文件或前面的工具结果。消息中应包含�
 ## 到期、续期与退出
 
 ```sh
-npx --yes --global call-grokbot@0.1.1 auth status
-npx --yes --global call-grokbot@0.1.1 auth refresh
-npx --yes --global call-grokbot@0.1.1 logout
+npx --yes https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz auth status
+npx --yes https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz auth refresh
+npx --yes https://registry.npmjs.org/call-grokbot/-/call-grokbot-0.1.1.tgz logout
 ```
 
 默认认证为 `browser`，即使环境中存在 `CURSOR_API_KEY` 也不会自动切换。浏览器位于另一台电脑时，可以设置 `NO_OPEN_BROWSER=1` 运行登录，让官方 CLI 输出登录链接。源码运行时，使用 `node /绝对路径/call-grokbot/dist/cli.js` 执行这些子命令。
@@ -269,7 +269,7 @@ npm run test:plugins
 npm pack --dry-run
 ```
 
-`test:plugins` 会下载固定版本的公开 npm 程序，分别从源码仓库、其他项目和同名同版本的测试目录启动两端插件，验证四个工具可被发现；不读取账号、不发送 Bot 消息。它需要网络访问，也在 CI 中运行。
+`test:plugins` 每次使用全新的匿名 npm 缓存，下载固定版本的公开 npm 程序，分别从源码仓库、其他项目和同名同版本的测试目录启动两端插件，验证四个工具可被发现；不读取账号、不发送 Bot 消息。它需要网络访问，也在 CI 中运行。
 
 对专用测试 Bot 做真实调用：
 
