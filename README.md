@@ -9,7 +9,7 @@ memory, and connected tools.
 Anysphere, xAI / Grok, OpenAI, or Anthropic.** The Grok Bot RPC is undocumented
 and may change. No public model-inference endpoint is provided.
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md)
+[English](README.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
 
 [Authentication details](docs/authentication.md)
 
@@ -18,6 +18,10 @@ and may change. No public model-inference endpoint is provided.
 [![Watch call-grokbot connect Codex and Claude Code to existing Grok Bots](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/demo-cover.jpg)](https://youtu.be/d0C7Hjs3z3w)
 
 Click the cover to watch the 50-second demo on YouTube (English narration).
+
+## How it works
+
+![call-grokbot architecture: local MCP bridge, task lifecycle, browser sign-in, and reliable task handling](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/core-logic-infographic-en-4k.png)
 
 ## Before you start
 

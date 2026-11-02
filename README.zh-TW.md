@@ -4,7 +4,7 @@
 
 **非官方專案，與 Cursor / Anysphere、xAI / Grok、OpenAI、Anthropic 無隸屬關係，也未獲其背書或支援。** Grok Bot RPC 的規格尚未公開，可能隨服務更新而改變。本專案不提供公開的模型推論端點。
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md)
+[English](README.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
 
 [驗證與登入詳細說明（英文）](docs/authentication.md)
 
@@ -13,6 +13,10 @@
 [![觀看 call-grokbot 示範：讓 Codex 和 Claude Code 呼叫現有的 Grok Bot](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/demo-cover.jpg)](https://youtu.be/d0C7Hjs3z3w)
 
 點選封面，即可在 YouTube 觀看 50 秒示範影片（英語旁白）。
+
+## 運作原理
+
+![call-grokbot 架構圖（英文）：本機 MCP 橋接、任務生命週期、瀏覽器登入與可靠的任務處理](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/core-logic-infographic-en-4k.png)
 
 ## 開始前的準備
 

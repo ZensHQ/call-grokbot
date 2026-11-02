@@ -4,7 +4,7 @@
 
 **非官方项目**，与 Cursor / Anysphere、xAI / Grok、OpenAI、Anthropic 没有隶属、背书或官方支持关系。Grok Bot RPC 尚未公开，可能随服务更新而变化。
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md)
+[English](README.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
 
 [认证细节（英文）](docs/authentication.md)
 
@@ -13,6 +13,10 @@
 [![观看 call-grokbot 演示：让 Codex 和 Claude Code 调用已有的 Grok Bot](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/demo-cover.jpg)](https://youtu.be/d0C7Hjs3z3w)
 
 点击封面，在 YouTube 观看 50 秒演示（英语解说）。
+
+## 工作原理
+
+![call-grokbot 架构图（英文）：本地 MCP 桥接、任务生命周期、浏览器登录和可靠任务处理](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/core-logic-infographic-en-4k.png)
 
 ## 开始前准备
 

@@ -4,7 +4,7 @@ Consulta tus **Grok Bots** existentes desde **Codex** y **Claude Code**. Un serv
 
 **Proyecto no oficial, sin afiliación, respaldo ni soporte de Cursor / Anysphere, xAI / Grok, OpenAI o Anthropic.** El RPC de Grok Bot no tiene una especificación pública y puede cambiar. Este proyecto no proporciona un endpoint público de inferencia de modelos.
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md)
+[English](README.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
 
 [Detalles de autenticación (en inglés)](docs/authentication.md)
 
@@ -13,6 +13,10 @@ Consulta tus **Grok Bots** existentes desde **Codex** y **Claude Code**. Un serv
 [![Mira cómo call-grokbot conecta Codex y Claude Code con tus Grok Bots](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/demo-cover.jpg)](https://youtu.be/d0C7Hjs3z3w)
 
 Haz clic en la imagen para ver la demostración de 50 segundos en YouTube (narración en inglés).
+
+## Cómo funciona
+
+![Arquitectura de call-grokbot (en inglés): MCP local, ciclo de vida de las tareas, autenticación en el navegador y gestión fiable de tareas](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/core-logic-infographic-en-4k.png)
 
 ## Antes de empezar
 

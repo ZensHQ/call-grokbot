@@ -4,7 +4,7 @@
 
 **非公式プロジェクトです。Cursor / Anysphere、xAI / Grok、OpenAI、Anthropic との提携関係はなく、各社による承認やサポートも受けていません。** Grok Bot RPC の仕様は公開されておらず、変更される可能性があります。公開のモデル推論エンドポイントを提供するものではありません。
 
-[English](README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md)
+[English](README.md) · [日本語](README.ja.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
 
 [認証の詳細（英語）](docs/authentication.md)
 
@@ -13,6 +13,10 @@
 [![call-grokbot で Codex と Claude Code から既存の Grok Bot を呼び出すデモを見る](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/demo-cover.jpg)](https://youtu.be/d0C7Hjs3z3w)
 
 画像をクリックすると、YouTube で 50 秒のデモ動画を視聴できます（英語ナレーション）。
+
+## 仕組み
+
+![call-grokbot の構成図（英語）：ローカル MCP、タスクの流れ、ブラウザ認証、確実なタスク管理](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/core-logic-infographic-en-4k.png)
 
 ## 利用前の準備
 
