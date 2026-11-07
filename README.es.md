@@ -10,9 +10,9 @@ Consulta tus **Grok Bots** existentes desde **Codex** y **Claude Code**. Un serv
 
 ## Vídeo de demostración
 
-[![Mira cómo call-grokbot conecta Codex y Claude Code con tus Grok Bots](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/demo-cover.jpg)](https://youtu.be/d0C7Hjs3z3w)
+https://github.com/user-attachments/assets/d89194ec-7d43-44d2-9116-a3007e1f2c22
 
-Haz clic en la imagen para ver la demostración de 50 segundos en YouTube (narración en inglés).
+Demostración de 50 segundos con narración en inglés.
 
 ## Cómo funciona
 

@@ -10,9 +10,9 @@
 
 ## 视频演示
 
-[![观看 call-grokbot 演示：让 Codex 和 Claude Code 调用已有的 Grok Bot](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/demo-cover.jpg)](https://youtu.be/d0C7Hjs3z3w)
+https://github.com/user-attachments/assets/d89194ec-7d43-44d2-9116-a3007e1f2c22
 
-点击封面，在 YouTube 观看 50 秒演示（英语解说）。
+50 秒演示，英语解说。
 
 ## 工作原理
 

@@ -15,9 +15,9 @@ and may change. No public model-inference endpoint is provided.
 
 ## Watch the demo
 
-[![Watch call-grokbot connect Codex and Claude Code to existing Grok Bots](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/demo-cover.jpg)](https://youtu.be/d0C7Hjs3z3w)
+https://github.com/user-attachments/assets/d89194ec-7d43-44d2-9116-a3007e1f2c22
 
-Click the cover to watch the 50-second demo on YouTube (English narration).
+A 50-second walkthrough with English narration.
 
 ## How it works
 

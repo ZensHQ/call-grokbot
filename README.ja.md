@@ -10,9 +10,9 @@
 
 ## デモ動画
 
-[![call-grokbot で Codex と Claude Code から既存の Grok Bot を呼び出すデモを見る](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/demo-cover.jpg)](https://youtu.be/d0C7Hjs3z3w)
+https://github.com/user-attachments/assets/d89194ec-7d43-44d2-9116-a3007e1f2c22
 
-画像をクリックすると、YouTube で 50 秒のデモ動画を視聴できます（英語ナレーション）。
+50 秒のデモ動画です（英語ナレーション）。
 
 ## 仕組み
 

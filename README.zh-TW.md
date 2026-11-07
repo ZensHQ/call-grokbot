@@ -10,9 +10,9 @@
 
 ## 影片示範
 
-[![觀看 call-grokbot 示範：讓 Codex 和 Claude Code 呼叫現有的 Grok Bot](https://raw.githubusercontent.com/ZensHQ/call-grokbot/main/docs/assets/demo-cover.jpg)](https://youtu.be/d0C7Hjs3z3w)
+https://github.com/user-attachments/assets/d89194ec-7d43-44d2-9116-a3007e1f2c22
 
-點選封面，即可在 YouTube 觀看 50 秒示範影片（英語旁白）。
+50 秒示範影片，搭配英語旁白。
 
 ## 運作原理
 
